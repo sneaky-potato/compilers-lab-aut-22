@@ -3,7 +3,7 @@
 ## 20CS10011                           ##
 ## Compilers Laboratory Assignment - 1 ##
 #########################################
-
+# GCC version: gcc (GCC) 12.1.1 20220730
     .file    "ass1.c"           # name of the c code file
     .text
     .section    .rodata         # section for read only data 
@@ -319,5 +319,5 @@ reverse:
 
 .LFE3:
     .size    reverse, .-reverse
-    .ident    "GCC: (GNU) 12.1.1 20220730"
+    .ident    "GCC: (GNU) 12.1.1 20220730"      # GCC information
     .section    .note.GNU-stack,"",@progbits
