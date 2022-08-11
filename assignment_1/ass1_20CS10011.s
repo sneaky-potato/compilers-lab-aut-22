@@ -24,10 +24,10 @@ main:
 .LFB0:
     .cfi_startproc              # beginning of function, call frame information
     pushq    %rbp               # Save old base pointer
-    .cfi_def_cfa_offset 16
-    .cfi_offset 6, -16
+    .cfi_def_cfa_offset 16      # Set CFA to use offset of 16
+    .cfi_offset 6, -16          # Set rule to set register 6 at offset of -16 from CFI
     movq    %rsp, %rbp          # set stack pointer to store base pointer address    
-    .cfi_def_cfa_register 6
+    .cfi_def_cfa_register 6     # Set CFA to use offset of 16
     subq    $80, %rsp           # space for allocating arrays
     movq    %fs:40, %rax        # segment addressing (buffer creation)
     movq    %rax, -8(%rbp)      # rax -> rbp-8, set rax = len
@@ -35,7 +35,7 @@ main:
 
     # printf("Enter the string (all lower case): ");    
 
-    leaq    .LC0(%rip), %rax    # LC0 + rip -> rax
+    leaq    .LC0(%rip), %rax    # LC0 + rip -> rax, store f-string pointer to rax
     movq    %rax, %rdi          # rax -> rdi, store first argument of printf function
     movl    $0, %eax            # 0 -> eax, clear eax
     call    printf@PLT          # call printf fucntion
@@ -92,7 +92,7 @@ main:
     call    __stack_chk_fail@PLT
 .L3:
     leave
-    .cfi_def_cfa 7, 8
+    .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from main function
     .cfi_endproc                # end of main, closes its unwind entry previously opened by .cfi_startproc
 .LFE0:
@@ -122,7 +122,7 @@ length:
     jne    .L6                  # continue to increment
     movl    -4(%rbp), %eax      # (rbp - 4) -> eax, set eax = i for returning from the function
     popq    %rbp                # pop base pointer rbp
-    .cfi_def_cfa 7, 8
+    .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from length function
     .cfi_endproc                # end of length, closes its unwind entry previously opened by .cfi_startproc
 .LFE1:
@@ -209,7 +209,7 @@ sort:
     call    reverse             # call reverse function
     nop                         # no operation
     leave
-    .cfi_def_cfa 7, 8
+    .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from sort function
     .cfi_endproc                # end of sort, closes its unwind entry previously opened by .cfi_startproc
 .LFE2:
@@ -310,7 +310,7 @@ reverse:
     nop                         # no operation
     nop                         # no operation
     popq    %rbp                # pop base pointer rbp
-    .cfi_def_cfa 7, 8
+    .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from reverse function
     .cfi_endproc                # end of sort, closes its unwind entry previously opened by .cfi_startproc
 
