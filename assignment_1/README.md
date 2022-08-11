@@ -22,4 +22,15 @@ cc -Wall -fverbose-asm -S ass1.c
 
 ## Solution
 
+GCC version information-  
+
+```shell
+gcc (GCC) 12.1.1 20220730
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
+
+>Generated assembly code might be slightly different depending on the compiler version
+
 The file [ass1_20CS10011.s](/assignment_1/ass1_20CS10011.s) contains the assignment submission file with comments describing *almost* all the lines of the assembly code.
