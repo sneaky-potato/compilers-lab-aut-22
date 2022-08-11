@@ -6,7 +6,7 @@
 
     .file    "ass1.c"           # name of the c code file
     .text
-    .section    .rodata         # read only data
+    .section    .rodata         # section for read only data 
     .align 8                    # align with 8-byte boundary
 .LC0:                                   
     .string    "Enter the string (all lower case): "        # f-string 1st printf
@@ -31,7 +31,7 @@ main:
     subq    $80, %rsp           # space for allocating arrays
     movq    %fs:40, %rax        # segment addressing (buffer creation)
     movq    %rax, -8(%rbp)      # rax -> rbp-8, set rax = len
-    xorl    %eax, %eax          # clear eax
+    xorl    %eax, %eax          # clear eax (explanation: xor operation takes fewer bytes than mov)
 
     # printf("Enter the string (all lower case): ");    
 
@@ -91,7 +91,7 @@ main:
     je    .L3                   # call termination segment    
     call    __stack_chk_fail@PLT
 .L3:
-    leave
+    leave                       # restore state of base pointer to original
     .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from main function
     .cfi_endproc                # end of main, closes its unwind entry previously opened by .cfi_startproc
@@ -109,7 +109,7 @@ length:
     .cfi_def_cfa_register 6
     movq    %rdi, -24(%rbp)     # rdi -> (rbp - 24), store the first argument of function in (rbp - 24)
     movl    $0, -4(%rbp)        # 0 -> (rbp - 4), set i = 0
-    jmp    .L5                  # jump to L5, loop starts
+    jmp    .L5                  # jump to L5, outer loop starts
 .L6:
     addl    $1, -4(%rbp)        # (rbp - 4) + 1 -> rbp - 4, set i = i + 1 
 .L5:
@@ -117,7 +117,7 @@ length:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = i
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, store str pointer to rax
     addq    %rdx, %rax          # rdx + rax -> rax, set str pointer to i, or str[i] 
-    movzbl    (%rax), %eax
+    movzbl    (%rax), %eax      # rax -> eax, move and zero padding the destination register
     testb    %al, %al           # test condition for loop 
     jne    .L6                  # continue to increment
     movl    -4(%rbp), %eax      # (rbp - 4) -> eax, set eax = i for returning from the function
@@ -138,9 +138,9 @@ sort:
     movq    %rsp, %rbp          # set stack pointer to store base pointer address
     .cfi_def_cfa_register 6
     subq    $48, %rsp           # space for allocating variables
-    movq    %rdi, -24(%rbp)     # rdi -> (rbp - 24), set first argument, str -> (rbp - 24)
-    movl    %esi, -28(%rbp)     # esi -> (rbp - 28), set second argument, len -> (rbp - 28)
-    movq    %rdx, -40(%rbp)     # rdx -> (rbp - 40), set third argument, dest -> (rbp - 40)
+    movq    %rdi, -24(%rbp)     # rdi -> (rbp - 24), get first argument, str -> (rbp - 24)
+    movl    %esi, -28(%rbp)     # esi -> (rbp - 28), get second argument, len -> (rbp - 28)
+    movq    %rdx, -40(%rbp)     # rdx -> (rbp - 40), get third argument, dest -> (rbp - 40)
     movl    $0, -8(%rbp)        # 0 -> (rbp - 8), set i = 0
     jmp    .L9                  # jump to L9, loop starts
 .L13:
@@ -151,12 +151,12 @@ sort:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = i
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, store str pointer to rax
     addq    %rdx, %rax          # rdx + rax -> rax, set rax = str + i 
-    movzbl    (%rax), %edx        
+    movzbl    (%rax), %edx      # rax -> edx, move and zero padding the destination register
     movl    -4(%rbp), %eax      # (rbp - 4) -> eax, set eax = j
     movslq    %eax, %rcx        # eax -> rcx, set rcx = j
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, store str pointer to rax
     addq    %rcx, %rax          # rcx + rax -> rax, set rax = str + j
-    movzbl    (%rax), %eax
+    movzbl    (%rax), %eax      # rax -> eax, move and zero padding the destination register
     cmpb    %al, %dl            # compare al and dl, check comparison of str[i] and str[j]
     jge    .L11                 # continue to increment if (str[i] >= str[j]) (jump greather than or equal)
 
@@ -166,7 +166,7 @@ sort:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = i
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, set store str pointer to rax
     addq    %rdx, %rax          # rdx + rax -> rax, set rax = str + i
-    movzbl    (%rax), %eax      # rax -> eax, set eax = str + i
+    movzbl    (%rax), %eax      # rax -> eax, set eax = str + i (move and zero padding the destination register)
     movb    %al, -9(%rbp)       # al -> (rbp - 9), set temp = str[i]
 
     # str[i] = str[j]
@@ -179,7 +179,7 @@ sort:
     movslq    %edx, %rcx        # edx -> rcx, set rcx = i
     movq    -24(%rbp), %rdx     # (rbp - 24) -> rdx, set store str pointer to rdx
     addq    %rcx, %rdx          # rcx + rdx -> rdx, set rdx = str + i
-    movzbl    (%rax), %eax      # rax -> eax, set eax = str pointer
+    movzbl    (%rax), %eax      # rax -> eax, set eax = str pointer (move and zero padding the destination register)
     movb    %al, (%rdx)         # al -> rdx, set str[i] = str[j]
 
     # str[j] = temp
@@ -188,7 +188,7 @@ sort:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = j
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, set store str pointer to rax
     addq    %rax, %rdx          # rax + rdx -> rdx, set rdx = str + j 
-    movzbl    -9(%rbp), %eax    # (rbp - 9) -> eax, set eax = temp
+    movzbl    -9(%rbp), %eax    # (rbp - 9) -> eax, set eax = temp (move and zero padding the destination register)
     movb    %al, (%rdx)         # set str[j] = temp
 .L11:
     addl    $1, -4(%rbp)        # (1 + rbp) - 4 -> (rbp - 4), set j = j + 1
@@ -208,7 +208,7 @@ sort:
     movq    %rax, %rdi          # rax -> rdi, store the first argument of reverse 
     call    reverse             # call reverse function
     nop                         # no operation
-    leave
+    leave                       # restore state of base pointer to original
     .cfi_def_cfa 7, 8           # directive for setting computing CFA from register 7 and 8
     ret                         # return from sort function
     .cfi_endproc                # end of sort, closes its unwind entry previously opened by .cfi_startproc
@@ -224,9 +224,9 @@ reverse:
     .cfi_offset 6, -16
     movq    %rsp, %rbp          # set stack pointer to store base pointer address
     .cfi_def_cfa_register 6
-    movq    %rdi, -24(%rbp)     # rdi -> (rbp - 24), set first argument, str -> (rbp - 24)
-    movl    %esi, -28(%rbp)     # esi -> (rbp - 28), set second argument, len -> (rbp - 28)
-    movq    %rdx, -40(%rbp)     # rdx -> (rbp - 40), set third argument, dest -> (rbp - 40)
+    movq    %rdi, -24(%rbp)     # rdi -> (rbp - 24), get first argument, str -> (rbp - 24)
+    movl    %esi, -28(%rbp)     # esi -> (rbp - 28), get second argument, len -> (rbp - 28)
+    movq    %rdx, -40(%rbp)     # rdx -> (rbp - 40), get third argument, dest -> (rbp - 40)
     movl    $0, -8(%rbp)        # 0 -> (rbp - 8), set i = 0
     jmp    .L15                 # jump L15, loop starts
 .L20:
@@ -252,7 +252,7 @@ reverse:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = i
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, set store str pointer to rax
     addq    %rdx, %rax          # rdx + rax -> rax, set rax = str + i
-    movzbl    (%rax), %eax      #
+    movzbl    (%rax), %eax      # rax -> eax, move and zero padding the destination register
     movb    %al, -9(%rbp)       # al -> (rbp - 9), set temp = str[i]
 
     # str[i] = str[j]
@@ -265,7 +265,7 @@ reverse:
     movslq    %edx, %rcx        # eax -> rcx, set rcx = i
     movq    -24(%rbp), %rdx     # (rbp - 24) -> rdx, set store str pointer to rdx
     addq    %rcx, %rdx          # rdx + rcx -> rdx, set rdx = str + i
-    movzbl    (%rax), %eax      # 
+    movzbl    (%rax), %eax      # rax -> eax, move and zero padding the destination register
     movb    %al, (%rdx)         # al -> (rdx), set str[i] = str[j]
 
     # str[j] = temp
@@ -274,7 +274,7 @@ reverse:
     movslq    %eax, %rdx        # eax -> rdx, set rdx = j
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, set store str pointer to rax
     addq    %rax, %rdx          # rdx + rax -> rax, set rax = str + j
-    movzbl    -9(%rbp), %eax    # (rbp - 9) -> eax, set eax = temp
+    movzbl    -9(%rbp), %eax    # (rbp - 9) -> eax, set eax = temp (move and zero padding the destination register)
     movb    %al, (%rdx)         # al -> (rdx), set str[j] = temp 
     jmp    .L18                 # continue loop
 .L23:
@@ -288,10 +288,13 @@ reverse:
     addl    %edx, %eax          # edx + eax -> eax
     sarl    %eax                # eax now has value len / 2 
     cmpl    %eax, -8(%rbp)      # compare eax and (rbp - 8), check comparison of len / 2 and i
-    jl    .L20                  # continue loop if (i < len / 2) (jump less than)
+    jl    .L20                  # jump tp L20 if (i < len / 2) (jump less than)
     movl    $0, -8(%rbp)        # 0 -> (rbp - 8), set i = 0
-    jmp    .L21
-.L22:                           # Label for setting dest[i] = str[i] and incrementing i
+    jmp    .L21                 # jump to L21, check for loop termination
+.L22:
+                           
+    # Label for setting dest[i] = str[i] and incrementing i
+
     movl    -8(%rbp), %eax      # (rbp - 8) -> eax, set eax = i
     movslq    %eax, %rdx        # eax -> rdx, set rdx = i
     movq    -24(%rbp), %rax     # (rbp - 24) -> rax, set store str pointer to rax
@@ -300,7 +303,7 @@ reverse:
     movslq    %edx, %rcx        # edx -> rcx, set rcx = i
     movq    -40(%rbp), %rdx     # (rbp - 40) -> rdx, set store dest pointer to rdx
     addq    %rcx, %rdx          # rdx + rcx -> rdx, set rdx = dest + i
-    movzbl    (%rax), %eax      # (rax) -> eax
+    movzbl    (%rax), %eax      # (rax) -> eax, move and zero padding the destination register
     movb    %al, (%rdx)         # set dest[i]=str[i]
     addl    $1, -8(%rbp)        # 1 + (rbp - 8) -> (rbp - 8), set i = i + 1 
 .L21:
