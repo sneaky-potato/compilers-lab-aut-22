@@ -1,7 +1,10 @@
 #include "myl.h"
+
 #define STR_BUFF_SIZE 100
 #define BUFF_SIZE 20
 #define PRECISION 6
+#define INT_MAX_LIMIT 2147483647
+#define INT_MIN_LIMIT 2147483648
 #include<stdio.h>
 
 int printStr(char *str)
@@ -29,7 +32,7 @@ int readInt(int *n)
 
     int is_negative = 0;
     int cnt = 0;
-    int value = 0;
+    long int value = 0;
     int length_integer = 0;
     
     __asm__ __volatile__ (
@@ -40,6 +43,8 @@ int readInt(int *n)
         :"S"(buffer), "d"(sizeof(buffer))
     );
 
+    if(length_integer > BUFF_SIZE || length_integer <= 0) return ERR;
+
     if (buffer[0] == '-'){
         is_negative = 1;
         cnt++;
@@ -47,8 +52,15 @@ int readInt(int *n)
  
     while(cnt < length_integer && buffer[cnt] != '\n' && buffer[cnt] != ' ' && buffer[cnt] != '\t')
     {
+        if(buffer[cnt] == '.') break;
+
         if (( ((int)buffer[cnt]-'0' > 9) || ((int)buffer[cnt]-'0' < 0) )) return ERR;
         
+        if(!is_negative && (1L * value * 10 + ((int)buffer[cnt] - '0')) > (INT_MAX_LIMIT))
+            return ERR;
+        else if(is_negative && (1L * value * 10 + ((int)buffer[cnt] - '0')) > (INT_MIN_LIMIT)) 
+            return ERR;
+
         value *= 10;
         value += (buffer[cnt] - '0');
         cnt++;
@@ -57,7 +69,9 @@ int readInt(int *n)
     if(is_negative) value *= -1;
     *n = value;
 
-    if(cnt >= 100 && (buffer[99] != '\n' && buffer[99] != ' ' && buffer[99] != '\t')) return ERR;
+    if(cnt >= BUFF_SIZE && (buffer[BUFF_SIZE - 1] != '\n' && buffer[BUFF_SIZE - 1] != ' ' && buffer[BUFF_SIZE - 1] != '\t')) {
+        return ERR;
+    }
     return OK;
 }
 
@@ -94,7 +108,7 @@ int printInt(int n)
         :"S"(buffer),"d"(cnt)
         );
 
-    return cnt; // Return the number of characters printed
+    return cnt;
 }
 
 int readFlt(float *f) 
@@ -102,16 +116,18 @@ int readFlt(float *f)
     char buffer[BUFF_SIZE];
     int is_negative = 0;
     int cnt = 0;
-    float value = 0;
-    int float_len = 0;
+    double value = 0;
+    int length_float = 0;
 
     __asm__ __volatile__ (
         "movl $0, %%eax \n\t"
         "movq $0, %%rdi \n\t"
         "syscall \n\t"
-        :"=a"(float_len)
+        :"=a"(length_float)
         :"S"(buffer), "d"(BUFF_SIZE)
     );
+
+    if(length_float > BUFF_SIZE || length_float <= 0) return ERR;
 
     if(buffer[cnt] == '-') {
         is_negative = 1;
@@ -121,9 +137,8 @@ int readFlt(float *f)
     int decimal_found = 0;
     float deci = 1;
 
-    while(cnt < float_len && buffer[cnt] != '\0' && buffer[cnt] != '\n' && buffer[cnt] != ' ' && buffer[cnt] != '\t')
+    while(cnt <= length_float && buffer[cnt] != '\0' && buffer[cnt] != '\n' && buffer[cnt] != ' ' && buffer[cnt] != '\t')
     {
-        // If not float, return error
         if (( ((int)buffer[cnt]-'0' > 9) || ((int)buffer[cnt]-'0' < 0) ) && buffer[cnt] != '.')
             return ERR;
         
@@ -134,19 +149,21 @@ int readFlt(float *f)
         }
 
         if(!decimal_found) {
-            value = 10*value + (int)(buffer[cnt] - '0');
+            value = 10 * value + (int)(buffer[cnt] - '0');
         } else {
             deci *=10;
-            value += (float)(buffer[cnt] - '0') / deci;
+            value += ((float)(buffer[cnt] - '0')) / (float)deci;
         }
         cnt++;
     }
     
     if(is_negative) value *= -1;
-
 	*f = value;
 
-    // printf("value read => %f\n", value);
+    if(cnt >= BUFF_SIZE && (buffer[BUFF_SIZE - 1] != '\n' && buffer[BUFF_SIZE - 1] != ' ' && buffer[BUFF_SIZE - 1] != '\t')) {
+        return ERR;
+    }
+
 	return OK; 
 }
 
@@ -177,32 +194,33 @@ int printFlt(float f)
     }
 
     int deci = 0;
-    while((int)f != f && deci < PRECISION)
+
+    double p = f;
+
+    while((long int)p != p && deci < PRECISION)
     {
         f*=10;
+        p*=10;
         deci++;
     } 
-
-    // deci = deci > PRECISION ? PRECISION : deci;
-
-    // printf("\ndecimal point is at = %d\n f = %f\n", deci, f);
 
     if(!deci) {
         buffer[cnt++] = '0';
         buffer[cnt++]='.';
     }
 
-    int n = f;
+    long int n = (long int)p;
 
     while(n)
     {
-        if(cnt == deci) buffer[cnt++] = '.'; // Place the decimal point in the correct position
-        buffer[cnt++] = n%10 + '0'; // Create an array with the digits of the number
-        n/=10;
+        if(cnt == deci) buffer[cnt++] = '.';
+        buffer[cnt++] = n % 10 + '0';
+        n /= 10;
     }
 
     if(cnt == deci) {
-        buffer[cnt++]='.', buffer[cnt++]='0';
+        buffer[cnt++]='.';
+        buffer[cnt++]='0';
     }
 
     if(is_negative) buffer[cnt++]='-';
@@ -220,6 +238,6 @@ int printFlt(float f)
         :"S"(buffer),"d"(cnt)
         );
 
-    return cnt; // Return the number of characters printed
+    return cnt; 
 
 }
