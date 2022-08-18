@@ -2,10 +2,10 @@ CC = gcc
 CFLAGS = -Wall
 RM = rm -f
 TARGET_LIB = libass2_20CS10011.a
-MAIN = test.c
+MAIN = main.c
 
 HEADER = myl.h
-SRCS = ass2_20CS10011.c test.c
+SRCS = ass2_20CS10011.c main.c
 OBJS = $(SRCS:.c=.o)
 MAIN_OBJ = $(MAIN:.c=.o)
 EXEC = a.out
