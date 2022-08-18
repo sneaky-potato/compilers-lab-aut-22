@@ -195,12 +195,12 @@ sort:
 .L10:
     movl    -4(%rbp), %eax      # eax <- (rbp - 4), set eax = j
     cmpl    -28(%rbp), %eax     # compare (rbp - 28) and eax, check comparison of j and len
-    jl    .L12                  # continue nested loop if j < len (jump less than)
+    jl    .L12                  # jump to L12 if j < len (jump less than)
     addl    $1, -8(%rbp)        # (rbp - 8) <- 1 + (rbp - 8), set i = i + 1
 .L9:
     movl    -8(%rbp), %eax      # eax <- (rbp - 8), set eax = i
     cmpl    -28(%rbp), %eax     # compare (rbp - 28) and eax, check comparison of i and len
-    jl    .L13                  # continue to increment if i < len (jump less than)
+    jl    .L13                  # jump to L13 if i < len (jump less than)
     movq    -40(%rbp), %rdx     # rdx <- (rbp - 40), set rdx = dest
     movl    -28(%rbp), %ecx     # ecx <- (rbp - 28), set ecx = len 
     movq    -24(%rbp), %rax     # rax <- (rbp - 24), set rax = str
@@ -241,7 +241,7 @@ reverse:
     addl    %edx, %eax          # eax <- edx + eax 
     sarl    %eax                # eax will now store len / 2
     cmpl    %eax, -4(%rbp)      # compare eax and (rbp - 4), check comparison of len / 2 and j 
-    jl    .L18                  # continue to increment outer loop if j < len / 2 (jump less than)
+    jl    .L18                  # jump to L18 if j < len / 2 (jump less than)
     movl    -8(%rbp), %eax      # eax <- (rbp - 8), set eax = i
     cmpl    -4(%rbp), %eax      # compare eax and (rbp - 4), check comparison of i and j
     je    .L23                  # jump to L23, if(i == j) (jump equal to) break out of nested loop
@@ -288,7 +288,7 @@ reverse:
     addl    %edx, %eax          # eax <- edx + eax
     sarl    %eax                # eax now has value len / 2 
     cmpl    %eax, -8(%rbp)      # compare eax and (rbp - 8), check comparison of len / 2 and i
-    jl    .L20                  # jump tp L20 if (i < len / 2) (jump less than)
+    jl    .L20                  # jump to L20 if (i < len / 2) (jump less than)
     movl    $0, -8(%rbp)        # (rbp - 8) <- 0, set i = 0
     jmp    .L21                 # jump to L21, check for loop termination
 .L22:
