@@ -1,0 +1,3 @@
+#define KEYWORD 10
+#define IDENTIFIER 11
+#define CONST_INTEGER 12
