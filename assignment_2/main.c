@@ -1,11 +1,46 @@
 #include "myl.h"
-#include <stdio.h>
+
+//#########################################
+//## Ashwani Kumar Kamal                 ##
+//## 20CS10011                           ##
+//## Compilers Laboratory Assignment - 2 ##
+//#########################################
+//# GCC version: gcc (GCC) 12.1.1 20220730
 
 int main()
 {
     printStr("Running test file\n\n");
 
-    printStr(":::Running standard test cases:::\n");
+    printStr("\n:::Running mixed test cases:::\n");
+
+    printStr("::String Test::\n");
+
+    char* listS[] = {"Simple String", "Newline\n", "\ttab", " ", "The End", "..."};
+    int n = sizeof(listS) / sizeof(char*);
+    for(int i=0; i<n; i++) {
+        printStr(listS[i]);
+        printStr("\n");
+    }
+
+    printStr("::Integer Test::\n");
+
+    int listI[] = {1, 0, -0, 58656758898, 999, -1, -4545};
+    n = sizeof(listI) / sizeof(int);
+    for(int i=0; i<n; i++) {
+        printInt(listI[i]);
+        printStr("\n");
+    }
+
+    printStr("::Float Test::\n");
+
+    float listF[] = {1, 0, -0, -9.67676878878, 1.00000004, -4545.234375};
+    n = sizeof(listF) / sizeof(float);
+    for(int i=0; i<n; i++) {
+        printFlt(listF[i]);
+        printStr("\n");
+    }
+
+    printStr(":::Running input test cases:::\n");
     char *s = "Hello There!";
     int r = printStr(s);
     printStr("\n");
@@ -41,6 +76,4 @@ int main()
     } else {
         printStr(">Error in reading integer input\n");
     }
-
-
 }
