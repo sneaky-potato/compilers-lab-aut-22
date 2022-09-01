@@ -1,5 +1,8 @@
 *.out
 *.o
 *.a
+*.zip
+lex.yy.c
 test.c
 test.s
+/test
