@@ -24,8 +24,32 @@ int main() {
             printf("<IDENTIFIER, %s>\n", yytext);
             break;
 
-        case CONST_INTEGER:
+        case INTEGER_CONSTANT:
             printf("<INTEGER_CONSTANT, %s>\n", yytext);
+            break;
+        
+        case FLOATING_CONSTANT:
+            printf("<FLOATING_CONSTANT, %s>\n", yytext);
+            break;
+
+        case CHARACTER_CONSTANT:
+            printf("<CHARACTER_CONSTANT, %s>\n", yytext);
+            break;
+
+        case STRING_LITERAL:
+            printf("<STRING_LITERAL, %s>\n", yytext);
+            break;
+
+        case PUNCTUATOR:
+            printf("<PUNCTUATOR, %s>\n", yytext);
+            break;
+
+        case SINGLE_LINE_COMMENT(1):
+            printf("<SINGLE_LINE_COMMENT, %s>\n", yytext);
+            break;
+
+        case MULTI_LINE_COMMENT(2):
+            printf("<SINGLE_LINE_COMMENT, %s>\n", yytext);
             break;
 
         default:
