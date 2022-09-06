@@ -6,3 +6,4 @@ lex.yy.c
 test.c
 test.s
 /test
+.vscode
