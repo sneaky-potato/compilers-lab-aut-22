@@ -1,6 +1,15 @@
 #include<stdio.h>
 #include"head.h"
 
+//#########################################
+//## Ashish Rekhani (20CS10010)          ##
+//## Ashwani Kumar Kamal (20CS10011)     ##
+//## Compilers Laboratory                ##
+//## Assignment - 3                      ##
+//#########################################
+//# GCC version: gcc (GCC) 12.1.1 20220730
+
+// extern lex variables and functions
 extern int yylex();
 extern char* yytext;
 extern int yylineno;
@@ -10,9 +19,13 @@ extern FILE* yyout;
 
 int main() {
     int next_token;
+    // redirect input from the test file
     yyin = fopen("ass3_20CS10010_20CS10011_test.c", "r");
 
+    // get next token usign yylex() function
     next_token = yylex();
+
+    // while next_token != <<EOF>>
     while(next_token) {
         switch (next_token)
         {
@@ -45,18 +58,20 @@ int main() {
             break;
 
         case SINGLE_LINE_COMMENT:
-            printf("<SINGLE_LINE_COMMENT, %s>\n", yytext);
+            printf("<SINGLE_LINE_COMMENT in line %d>\n", yylineno-1);
             break;
 
         case MULTI_LINE_COMMENT:
-            printf("<MULTI_LINE_COMMENT, %s>\n", yytext);
+            printf("<MULTI_LINE_COMMENT in line %d>\n", yylineno-1);
             break;
 
+        // if token matches no valid lex specification 
         default:
-            printf("<UNEXPECTED TOKEN in line %d, %s>\n", yylineno, yytext);
+            printf("<UNEXPECTED TOKEN in line %d, %s>\n", yylineno-1, yytext);
             break;
         }
 
+        // get next token from character stream
         next_token = yylex();
     } 
     return 0;
