@@ -14,6 +14,12 @@ Read the assignment problem statement from [Assignment_3.pdf](/assignment_3/Assi
 make
 ```
 
+- To run the executable file and print the lexical analysis on terminal as well as output.txt file, use
+
+```shell
+make run
+```
+
 - To clean and remove executable and lex C file after compilation use
 
 ```shell
