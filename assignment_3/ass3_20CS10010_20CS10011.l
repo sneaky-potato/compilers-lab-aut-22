@@ -43,12 +43,12 @@ WHITESPACE              [ \t\n]
 "/*"                        {BEGIN(MULTI_LINE_FLAG);}
 <MULTI_LINE_FLAG>"*/"       {BEGIN(INITIAL); return MULTI_LINE_COMMENT;}
 <MULTI_LINE_FLAG>.          { }
-<MULTI_LINE_FLAG>"\n"       { }
+<MULTI_LINE_FLAG>"\n"       { yylineno++; }
 
 "//"                        {BEGIN(SINGLE_LINE_FLAG);}
-<SINGLE_LINE_FLAG>"\n"      {BEGIN(INITIAL);return SINGLE_LINE_COMMENT;}
+<SINGLE_LINE_FLAG>"\n"      {BEGIN(INITIAL); yylineno++; return SINGLE_LINE_COMMENT;}
 <SINGLE_LINE_FLAG>.         { }
-
+\n                          { yylineno++; }
 {WHITESPACE}                { }
 .                           { return INVALID_TOKEN;}
 
