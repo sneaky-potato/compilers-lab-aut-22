@@ -1,3 +1,4 @@
+// macros definitions for valid tokens
 #define KEYWORD 10
 #define IDENTIFIER 11
 #define INTEGER_CONSTANT 12
