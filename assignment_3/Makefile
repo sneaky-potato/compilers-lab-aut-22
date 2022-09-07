@@ -13,9 +13,13 @@ $(EXEC): $(LEX_C)
 	$(CC) $(LEX_C) $(MAIN)
 
 # Make rule for lex.yy.c (depends on target lex specification file)
-$(LEX_C) : $(TARGET_LEX)
+$(LEX_C): $(TARGET_LEX)
 	$(LEX) $(TARGET_LEX)
 
 # Make rule for cleaning and removing files after compiling
 clean:
 	$(RM) $(EXEC) $(LEX_C)
+
+# Make rule for running the executable
+run: $(EXEC)
+	./$(EXEC) && ./$(EXEC) > output.txt
