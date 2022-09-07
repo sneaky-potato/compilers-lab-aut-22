@@ -44,12 +44,12 @@ int main() {
             printf("<PUNCTUATOR, %s>\n", yytext);
             break;
 
-        case SINGLE_LINE_COMMENT(1):
+        case SINGLE_LINE_COMMENT:
             printf("<SINGLE_LINE_COMMENT, %s>\n", yytext);
             break;
 
-        case MULTI_LINE_COMMENT(2):
-            printf("<SINGLE_LINE_COMMENT, %s>\n", yytext);
+        case MULTI_LINE_COMMENT:
+            printf("<MULTI_LINE_COMMENT, %s>\n", yytext);
             break;
 
         default:
