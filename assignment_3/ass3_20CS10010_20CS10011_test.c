@@ -37,14 +37,17 @@ enum weekend {
     SUNDAY
 };
 
-inline int inline_variadic_f(int *restrict first, ...) {
-    auto int x = 1;
-    volatile int volat;
-    return x;
-}
 
-void solve()
-{
+struct struct2 {
+    _Complex x;
+    _Bool z;
+    short i;
+};
+
+static int p;
+typedef struct struct1 struct2;
+int main() {
+
     Graph *g;
     g = (Graph *)malloc(sizeof(Graph));
 
@@ -59,24 +62,67 @@ void solve()
         arr[i] = INF;
     }
 
-    unsigned int count = 0;
-    unsigned short int flag = 0;
-    int y = 42;
-
-    while (y) {
-        y &= (y - 1);
-        count++;
-        flag ^= 1;
+    double x = -3.3;
+    int y = 5;
+    int size_of = 4*sizeof(char);
+    inline int inline_variadic_f(int *restrict first, ...) {
+        auto int x = 1;
+        volatile int volat;
+        return x;
     }
 
+    for(int i = 0; i<size_of;i++){
+        x++;
+        x--;
+        x += 1;
+        x -= 1;
+        x *= 1;
+        x /= 1;
+        y |= y;
+        y &= y;
+        if (y % 2 == 0){
+            printf("y = %d\n", y);
+            y<<1;
+        }
+        else if (y&1 || y > 120){
+            y>>1;
+            y = y | 1;
+        }
+    }
+
+    
+    unsigned int z = 2;
+    const double pi = 3.14;
+    int i1 = 1e9 + 7;
+    float f1 = 1.234e5;
+    int i2 = -23;
+    long int i3 = 12345675634;
+    int i4 = (i1 >= i2)?i1:i2;
+    switch(i1){
+        case 1:
+            printf("1");
+            break;
+        case 2:
+            printf("2");
+            break;
+        default:
+            printf("default");
+            break;
+    }
+    char s1[] = "Hello";
+
+    int u = 0;
+    do{
+        u++;
+        if (u > 10) goto label;
+        label:
+            u++;
+            continue;
+    } while ( u < 12);
+
+    return 0;
 }
 
-int main()
-{
-    int tc = 10;
-    for (int t = 1; t <= tc; t++) {
-        solve();
-    }
-}
+// This is a single line comment
 
 // <<EOF>>
