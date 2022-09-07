@@ -2,8 +2,10 @@
 *.o
 *.a
 *.zip
+*.tar
 lex.yy.c
 test.c
 test.s
 /test
 .vscode
+output.txt
