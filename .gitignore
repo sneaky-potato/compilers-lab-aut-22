@@ -1,4 +1,5 @@
 *.out
+*.output
 *.o
 *.a
 *.zip
@@ -9,3 +10,4 @@ test.s
 /test
 .vscode
 output.txt
+*.tab.*
