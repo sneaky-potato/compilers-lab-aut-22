@@ -1,0 +1,187 @@
+-------------------- Parsing --------------------
+
+INFO [Line 1] : type specifier --> int
+
+INFO [Line 1] : direct declarator --> identifier
+
+INFO [Line 1] : direct declarator --> direct declarator (identifier list)
+
+INFO [Line 2] : type specifier --> int
+
+INFO [Line 2] : primary-expression --> identifier
+
+INFO [Line 2] : assignment operator --> =
+
+INFO [Line 2] : primary-expression --> integer constant
+
+INFO [Line 2] : equality expression --> relational expression
+
+INFO [Line 2] : assignment expression --> conditional expression
+
+INFO [Line 2] : assignment expression --> unary_expression assign_op expression
+
+INFO [Line 2] : expression --> assignment expression
+
+INFO [Line 2] : expression statement
+
+INFO [Line 2] : statement --> expression statement
+
+INFO [Line 5] : function specifier --> inline
+
+INFO [Line 5] : type specifier --> void
+
+INFO [Line 5] : direct declarator --> identifier
+
+INFO [Line 5] : type specifier --> int
+
+INFO [Line 5] : type qualifier --> restrict
+
+INFO [Line 5] : direct declarator --> identifier
+
+INFO [Line 5] : parameter list -> parameter declaration
+
+INFO [Line 5] : type qualifier --> const
+
+INFO [Line 5] : type specifier --> int
+
+INFO [Line 5] : direct declarator --> identifier
+
+INFO [Line 5] : parameter list
+
+INFO [Line 5] : type qualifier --> volatile
+
+INFO [Line 5] : type specifier --> int
+
+INFO [Line 5] : direct declarator --> identifier
+
+INFO [Line 5] : parameter list
+
+INFO [Line 5] : parameter type list
+
+INFO [Line 5] : direct declarator --> direct declarator (parameter type list)
+
+INFO [Line 6] : type specifier --> int
+
+INFO [Line 6] : primary-expression --> identifier
+
+INFO [Line 6] : equality expression --> relational expression
+
+INFO [Line 6] : assignment expression --> conditional expression
+
+INFO [Line 6] : expression --> assignment expression
+
+INFO [Line 6] : expression statement
+
+INFO [Line 6] : statement --> expression statement
+
+INFO [Line 7] : type specifier --> int
+
+INFO [Line 7] : primary-expression --> identifier
+
+INFO [Line 7] : equality expression --> relational expression
+
+INFO [Line 7] : assignment expression --> conditional expression
+
+INFO [Line 7] : expression --> assignment expression
+
+INFO [Line 7] : expression statement
+
+INFO [Line 7] : statement --> expression statement
+
+INFO [Line 8] : type specifier --> int
+
+INFO [Line 8] : primary-expression --> identifier
+
+INFO [Line 8] : equality expression --> relational expression
+
+INFO [Line 8] : assignment expression --> conditional expression
+
+INFO [Line 8] : expression --> assignment expression
+
+INFO [Line 8] : expression statement
+
+INFO [Line 8] : statement --> expression statement
+
+INFO [Line 9] : type specifier --> int
+
+INFO [Line 9] : primary-expression --> identifier
+
+INFO [Line 9] : assignment operator --> =
+
+INFO [Line 9] : primary-expression --> integer constant
+
+INFO [Line 9] : equality expression --> relational expression
+
+INFO [Line 9] : assignment expression --> conditional expression
+
+INFO [Line 9] : assignment expression --> unary_expression assign_op expression
+
+INFO [Line 9] : expression --> assignment expression
+
+INFO [Line 9] : expression statement
+
+INFO [Line 9] : statement --> expression statement
+
+INFO [Line 10] : primary-expression --> integer constant
+
+INFO [Line 10] : equality expression --> relational expression
+
+INFO [Line 10] : assignment expression --> conditional expression
+
+INFO [Line 10] : expression --> assignment expression
+
+INFO [Line 12] : statement --> compound statement
+
+INFO [Line 14] : statement --> compound statement
+
+INFO [Line 14] : selection statement --> if else
+
+INFO [Line 14] : statement --> selection statement
+
+INFO [Line 16] : primary-expression --> integer constant
+
+INFO [Line 16] : equality expression --> relational expression
+
+INFO [Line 16] : assignment expression --> conditional expression
+
+INFO [Line 16] : expression --> assignment expression
+
+INFO [Line 18] : statement --> compound statement
+
+INFO [Line 19] : selection statement --> if
+
+INFO [Line 19] : statement --> selection statement
+
+INFO [Line 19] : primary-expression --> identifier
+
+INFO [Line 19] : equality expression --> relational expression
+
+INFO [Line 19] : assignment expression --> conditional expression
+
+INFO [Line 19] : expression --> assignment expression
+
+INFO [Line 22] : statement --> jump statement
+
+INFO [Line 22] : statement --> labeled statement
+
+INFO [Line 23] : statement --> compound statement
+
+INFO [Line 23] : selection statement --> switch
+
+INFO [Line 23] : statement --> selection statement
+
+INFO [Line 26] : type qualifier --> const
+
+INFO [Line 26] : type specifier --> char
+
+INFO [Line 26] : direct declarator --> identifier
+
+INFO [Line 26] : type specifier --> int
+
+INFO [Line 26] : direct declarator --> identifier
+
+INFO [Line 26] : parameter list -> parameter declaration
+
+INFO [Line 26] : parameter type list
+
+ERROR [Line 26] : syntax error, unable to parse : [
