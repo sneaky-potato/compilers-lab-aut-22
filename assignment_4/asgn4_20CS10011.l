@@ -23,12 +23,12 @@ FLOATING_CONSTANT       {FRACTIONAL_CONSTANT}({EXPONENT_PART})?|{DIGIT_SEQUENCE}
 ENUMERATION_CONSTANT    {IDENTIFIER}
 
 C_CHAR                  [^\'\n\\']|{ESCAPE_SEQUENCE}
-C_CHAR_SEQUENCE         {C_CHAR}+ 
-CHARACTER_CONSTANT      \'{C_CHAR_SEQUENCE}\''
+C_CHAR_SEQUENCE         {C_CHAR}+
+CHARACTER_CONSTANT      \'{C_CHAR_SEQUENCE}\'
 
 S_CHAR                  [^\"\n\\]|{ESCAPE_SEQUENCE}
 S_CHAR_SEQUENCE         {S_CHAR}+
-STRING_LITERAL          \"({S_CHAR_SEQUENCE})?\"
+STRING_LITERAL          \"({S_CHAR_SEQUENCE}?)\"
 WHITESPACE              [ \t\r]
 
 %%
@@ -81,62 +81,62 @@ WHITESPACE              [ \t\r]
 "="                         {return EQ;}
 ":"                         {return COLON;}
 ";"                         {return SEMI_COLON;}
-"?"					        {return QUESTION_MARK;}
+"?"                         {return QUESTION_MARK;}
 "++"                        {return INC_OP;}
-"--"                        {return DEC_OP;}
 "->"                        {return PTR_OP;}
 "<<"                        {return LEFT_OP;}
 ">>"                        {return RIGHT_OP;}
-"<"					        {return LESS_THAN;}
-">"					        {return GREATER_THAN;}
+"<"                         {return LESS_THAN;}
+">"                         {return GREATER_THAN;}
 "<="                        {return LTE_OP;}
 ">="                        {return GTE_OP;}
-"=="                        {return EQ_OP;}
-"!="                        {return NE_OP;}
 "..."                       {return ELLIPSIS;}
-"&&"                        {return AND_OP;}
-"||"                        {return OR_OP;}
 "*="                        {return MUL_ASSIGN;}
 "/="                        {return DIV_ASSIGN;}
 "%="                        {return MOD_ASSIGN;}
 "+="                        {return ADD_ASSIGN;}
 "-="                        {return SUB_ASSIGN;}
 "<<="                       {return LEFT_ASSIGN;}
+"--"                        {return DEC_OP;}
+"=="                        {return EQ_OP;}
+"&&"                        {return AND_OP;}
+"||"                        {return OR_OP;}
 ">>="                       {return RIGHT_ASSIGN;}
+"!="                        {return NE_OP;}
 "&="                        {return AND_ASSIGN;}
-"^="                        {return XOR_ASSIGN;}
 "|="                        {return OR_ASSIGN;}
+"^="                        {return XOR_ASSIGN;}
 "("                         {return PARENTHESIS_OPEN;}
 ")"                         {return PARENTHESIS_CLOSE;}
 "{"                         {return CURLY_BRACE_OPEN;}
 "}"                         {return CURLY_BRACE_CLOSE;}
-"["                         {return SQR_BRACE_CLOSE;}
+"["                         {return SQR_BRACE_OPEN;}
 "]"                         {return SQR_BRACE_CLOSE;}
-"."					        {return DOT;}
-"&"					        {return BITWISEAND;}
-"|"					        {return BITWISEOR;}
-"^"					        {return BITWISEXOR;}
-"*"					        {return STAR;}
-"+"					        {return PLUS;}
-"-"					        {return MINUS;}
-"~"					        {return NOT;}
-"!"					        {return EXCLAMATION;}
-"/"					        {return DIVIDE;}
-"%"					        {return PERCENTAGE;}
-","					        {return COMMA;}
-"#" 				        {return HASH;}
+"."                         {return DOT;}
+"&"                         {return BITWISEAND;}
+"|"                         {return BITWISEOR;}
+"^"                         {return BITWISEXOR;}
+"*"                         {return STAR;}
+"+"                         {return PLUS;}
+"-"                         {return MINUS;}
+"~"                         {return NOT;}
+"!"                         {return EXCLAMATION;}
+"/"                         {return DIVIDE;}
+"%"                         {return PERCENTAGE;}
+","                         {return COMMA;}
+"#"                         {return HASH;}
 
 "/*"                        {BEGIN(MULTI_LINE_FLAG);}
 <MULTI_LINE_FLAG>"*/"       {BEGIN(INITIAL);}
 <MULTI_LINE_FLAG>.          { }
-<MULTI_LINE_FLAG>"\n"       { yylineno++; }
+<MULTI_LINE_FLAG>"\n"       { yylineno++; printf("\n-------- Parsing Line No. %d --------\n", yylineno); }
 
 "//"                        {BEGIN(SINGLE_LINE_FLAG);}
-<SINGLE_LINE_FLAG>"\n"      {BEGIN(INITIAL); yylineno++; }
+<SINGLE_LINE_FLAG>"\n"      {BEGIN(INITIAL); yylineno++;printf("\n-------- Parsing Line No. %d --------\n", yylineno); }
 <SINGLE_LINE_FLAG>.         { }
-\n                          { yylineno++; }
+\n                          { yylineno++; printf("\n-------- Parsing Line No. %d --------\n", yylineno); }
 {WHITESPACE}                { }
-.                           { return INVALID_TOKEN;}
+.                           { printf("ERROR [Line %d] : Invalid Token %s\n",yylineno,yytext); return INVALID_TOKEN;}
 
 %%
 
