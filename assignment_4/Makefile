@@ -1,13 +1,8 @@
 # Makefile variables
-CC = g++
-LEX = lex
 RM = rm -f
 MAIN = asgn4_20CS10011
-LEX_C = lex.yy.c
 
-EXEC = a.out
-
-ass4_20CS10011_output.txt: a.out $(MAIN)_test.c
+$(MAIN)_output.txt: a.out $(MAIN)_test.c
 	./a.out < $(MAIN)_test.c > $(MAIN)_output.txt
 
 a.out: lex.yy.o $(MAIN).tab.o $(MAIN).o
@@ -32,4 +27,4 @@ $(MAIN).tab.o: $(MAIN).tab.c
 	g++ -c $(MAIN).tab.c
 
 clean:
-	$(RM) a.out lex.yy.* *.o
+	$(RM) a.out lex.yy.* *.o *.tab.* *.output
