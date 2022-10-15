@@ -1,107 +1,49 @@
-int main() {
-    int x = 1;
-}
+// This is a test file.
 
-inline void foo1(int *restrict p1, const int p2, volatile int p3, ...) {
-    auto int a;
-    register int b;
-    extern int c;
-    static int d = 4;
-    if(1) {
+// Make changes in this file to test the various rules coded
 
-    } else {
+//#########################################
+//## Ashish Rekhani (20CS10010)          ##
+//## Ashwani Kumar Kamal (20CS10011)     ##
+//## Compilers Laboratory                ##
+//## Assignment - 3                      ##
+//#########################################
+//# GCC version: gcc (GCC) 12.1.1 20220730
 
+int main () { 
+  int p,i,n,k;
+  char strin[] = "Hello Rohan";
+  char singlech = 'p';
+  float val = 323;
+  for (i=1;i<100;i++) {
+    if(val<500) {
+      printf ("%s",c);
     }
+  }
+  // Quicksort driver
+  int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    quickSort(arr, 0, n-1);
+    printf("Sorted array: \n");
+    printArray(arr, n);
 
-    if(2) {
+    //driver for nth fibonacci problem
+    int n1 = 40;
+    _initialize();
+    printf("Fibonacci number is %d ", fib(n1));
 
-    }
-    switch (expression)
-    {
-    default:
-        break;
-    }
-}
 
-const char *foo2(int b[const static 8], int c[static 9], int d[], int e[const *]);
+    //driver for 0-1 knapsack problem using dynamic programming
+    int val[] = {60, 100, 120};
+    int wt[] = {10, 20, 30};
+    int  W = 50;
+    int n = sizeof(val)/sizeof(val[0]);
+    printf("%d", knapSack(W, wt, val, n));
 
-enum e1;
-enum e2 { TAG1, TAG2 };
-enum { TAG3 = 0, TAG4 } e3;
-
-signed main() {
-    int a[6] = { 1, 2, [2]=3 };
-    char b[] = "Test string :)";
-    char c1 = 'c';
-    char *c2 = &c1;
-    *c2 = 'a';
-    char **d = (char) { "a", b, "abc" };
-
-    unsigned long n1 = +123456789;
-    short n2 = ~16;
-    float n3 = -3.53;
-    double n4 = 2.99e-2;
-    _Bool n5 = !1;
-    double _Complex n6;
-    double _Imaginary n7;
-
-    n1 = (int) c;
-    n1 = sizeof(int);
-    n1 = sizeof n1;
-
-    n1 *= n1, n1 /= n1, n1 %= n1;
-    n1 += (n1 -= n1);
-    n1 <<= (n1 >>= n1);
-    n1 &= n1 |= n1 ^= n1;
-
-    n1 = ( (n1==0 || n1==1) && n1!=n2 ) ? n1 = 0 : n2;
-    a[n2] = n1;
-
-    RANDOM_LOC:
-        if (n3 < n4) {
-
-            switch (n2) {
-                case 0:
-                    n2++;
-                    break;
-                default:
-                    n2--;
-            }
-
-        } else if (n3 > n4) {
-            if(n2 >= n1)
-                n1++;
-        } else {
-            if(n2 <= n1)
-                n2++;
-        }
-    
-    while(n2--)
-        goto RANDOM_LOC;
-
-    for(;;)
-    for(int i;;)
-    for(int i=0, j=1; i!=j; i++) {
-        if(j==1)
-            continue;
-    }
-
-    do {
-        n2++;
-    } while(n2 < 0);
-
-    int t1, t2, t3, t4, t5, t6;
-
-    t1 = t1 + t2 - t3 / t4 * t5 % t6;
-    t2 = t2<<2;
-    t2 = t2>>2;
-    t1 = t2 & t3 | t4 ^ t5;
-
-    foo1(1,2,3,4,5,6);
-
-    /* . and -> test */
-    ms1.a = 3;
-    ms2->a = 4;
-
-    return 0;
+  // Program to print area of rectangle
+  int person=101,a,b;
+  printf("Enter the length and breadth of rectangle: \n");
+  scanf("%d%d",&a,&b);
+  printf("Area of rectangle is: %d",a*b);
+  return;
 }
