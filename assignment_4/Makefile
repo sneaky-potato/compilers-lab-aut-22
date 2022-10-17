@@ -1,6 +1,6 @@
 # Makefile variables
 RM = rm -f
-MAIN = asgn4_20CS10011
+MAIN = ass4_20CS10010_20CS10011
 
 $(MAIN)_output.txt: a.out $(MAIN)_test.c
 	./a.out < $(MAIN)_test.c > $(MAIN)_output.txt
