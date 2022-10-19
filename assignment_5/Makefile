@@ -4,28 +4,32 @@ MAIN := ass5_20CS10010_20CS10011
 EXEC := ./a.out
 IN_DIR := ./input
 OUT_DIR := ./output
-TESTFILES := $(wildcard $(IN_DIR)/*.c)
-_INPUTS := $(notdir $(TESTFILES))
+TESTFILES := $(wildcard $(IN_DIR)/*.c) # [./input/test1.c, ./input/test2.c, ...]
+_INPUTS := $(notdir $(TESTFILES)) # [test1.c, test2.c, ...]
 
+# Colors for printing and logging information on console
 PRIMARY:=\033[0;35m
 LOG:=\033[0;36m
 SUCCESS:=\033[0;32m
 INFO:=\033[0;33m
 NC:=\033[0m
 
+# Functions for printing and logging information on console
 define log
   	@echo -e "${PRIMARY}${BRAND} ${LOG}$1${NC} ${INFO}$2${NC}"
-endef
-
-define newline 
-
-
 endef
 
 define success
   	@echo -e "${PRIMARY}${BRAND} ${SUCCESS}$1${NC}"
 endef
 
+# Explicit newline function
+define newline 
+
+
+endef
+
+# Makefile recipes
 a.out: lex.yy.o $(MAIN).tab.o $(MAIN)_translator.o
 	g++ lex.yy.o $(MAIN).tab.o $(MAIN)_translator.o -lfl
 
