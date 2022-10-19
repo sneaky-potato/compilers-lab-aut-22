@@ -1,9 +1,11 @@
 # Makefile variables
 RM := rm -f
 MAIN := ass5_20CS10010_20CS10011
+EXEC := ./a.out
 IN_DIR := ./input
 OUT_DIR := ./output
 TESTFILES := $(wildcard $(IN_DIR)/*.c)
+_INPUTS := $(notdir $(TESTFILES))
 
 PRIMARY:=\033[0;35m
 LOG:=\033[0;36m
@@ -13,6 +15,11 @@ NC:=\033[0m
 
 define log
   	@echo -e "${PRIMARY}${BRAND} ${LOG}$1${NC} ${INFO}$2${NC}"
+endef
+
+define newline 
+
+
 endef
 
 define success
@@ -47,10 +54,9 @@ test:
 
 	$(call log, ::Initiating testing...::)
 
+	$(foreach in_file, $(_INPUTS), $(call log, ::Testing file::, $(in_file)) $(newline) $(EXEC) < $(IN_DIR)/$(in_file) > $(OUT_DIR)/$(in_file:.c=.txt) $(newline))
 
-	@- $(foreach test_file, $(TESTFILES), $(call log, Testing file, $(test_file)))
-
-	$(call success, "Test outputs written to ./output")
+	$(call success, Test outputs written to $(OUT_DIR))
 
 clean:
 	$(RM) a.out lex.yy.* *.o *.tab.* *.output
