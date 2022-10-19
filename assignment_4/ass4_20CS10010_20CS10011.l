@@ -1,7 +1,7 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
-    #include"asgn4_20CS10011.tab.h"
+    #include"ass4_20CS10010_20CS10011.tab.h"
     extern void yyerror(const char *);
 
 %}
