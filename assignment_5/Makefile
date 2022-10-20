@@ -58,9 +58,9 @@ test:
 
 	$(call log, ::Initiating testing...::)
 
-	$(foreach in_file, $(_INPUTS), $(call log, ::Testing file::, $(in_file)) $(newline) $(EXEC) < $(IN_DIR)/$(in_file) > $(OUT_DIR)/$(in_file:.c=.txt) $(newline))
+	$(foreach in_file, $(_INPUTS), $(call log, ::Testing file::, $(in_file)) $(newline) $(EXEC) < $(IN_DIR)/$(in_file) > $(OUT_DIR)/$(in_file:.c=.out) $(newline))
 
 	$(call success, Test outputs written to $(OUT_DIR))
 
 clean:
-	$(RM) a.out lex.yy.* *.o *.tab.* *.output
+	$(RM) $(EXEC) lex.yy.* *.o *.tab.* *.output *.gch
