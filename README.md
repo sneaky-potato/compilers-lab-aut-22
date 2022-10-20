@@ -12,6 +12,7 @@ Assignment solutions along with problem statement can be found here-
 - [assignment_2](/assignment_2/README.md)
 - [assignment_3](/assignment_3/README.md)
 - [assignment_4](/assignment_4/README.md)
+- [assignment_5](/assignment_5/README.md)
 
 ## Disclaimer
 
