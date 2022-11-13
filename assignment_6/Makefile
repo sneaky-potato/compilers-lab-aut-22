@@ -93,3 +93,8 @@ test: lib$(MAIN).a
 	mv $(OUT_DIR).s $(OUT_DIR)/$(MAIN)_test5.s
 	
 	$(call success,::Tests successful::\nGenerated .s files are in $(OUT_DIR))
+
+
+# Run the following command to generate executable from output test assembly file
+# gcc -g -Wall -c  output/ass6_20CS10010_20CS10011_test1.s -no-pie -o ass6_20CS10010_20CS10011_test1.o
+# gcc -g -no-pie ass6_20CS10010_20CS10011_test1.o -o ./output/test1 -L. -lass6_20CS10010_20CS10011
