@@ -702,7 +702,7 @@ void quadArray::print()
             case Q_ASSIGN:
                 break;
             }
-            cout << arg1 << endl;
+            cout << endl;
         }
 
         else if (op == Q_GOTO)
