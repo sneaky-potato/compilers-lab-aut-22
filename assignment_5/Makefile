@@ -6,6 +6,7 @@ IN_DIR := ./input
 OUT_DIR := ./output
 TESTFILES := $(wildcard $(IN_DIR)/*.c) # [./input/test1.c, ./input/test2.c, ...]
 _INPUTS := $(notdir $(TESTFILES)) # [test1.c, test2.c, ...]
+CC := g++
 
 # Colors for printing and logging information on console
 PRIMARY:=\033[0;35m
@@ -31,17 +32,17 @@ endef
 
 # Makefile recipes
 a.out: lex.yy.o $(MAIN).tab.o $(MAIN)_translator.o
-	g++ lex.yy.o $(MAIN).tab.o $(MAIN)_translator.o -lfl
+	$(CC) lex.yy.o $(MAIN).tab.o $(MAIN)_translator.o -lfl
 
 $(MAIN)_translator.o: $(MAIN)_translator.h $(MAIN)_translator.cxx
-	g++ -c $(MAIN)_translator.h
-	g++ -c $(MAIN)_translator.cxx
+	$(CC) -c $(MAIN)_translator.h
+	$(CC) -c $(MAIN)_translator.cxx
 
 lex.yy.o: lex.yy.c
-	g++ -c lex.yy.c
+	$(CC) -c lex.yy.c
 
 $(MAIN).tab.o: $(MAIN).tab.c
-	g++ -c $(MAIN).tab.c
+	$(CC) -c $(MAIN).tab.c
 
 lex.yy.c: $(MAIN).l $(MAIN).tab.h $(MAIN)_translator.h
 	flex $(MAIN).l
@@ -58,7 +59,7 @@ test:
 
 	$(call log, ::Initiating testing...::)
 
-	$(foreach in_file, $(_INPUTS), $(call log, ::Testing file::, $(in_file)) $(newline) $(EXEC) < $(IN_DIR)/$(in_file) > $(OUT_DIR)/$(in_file:.c=.out) $(newline))
+	$(foreach in_file, $(_INPUTS), $(call log, ::Testing file::, $(in_file)) $(newline) $(EXEC) < $(IN_DIR)/$(in_file) > $(OUT_DIR)/$(in_file:.c=quads.out) $(newline))
 
 	$(call success, Test outputs written to $(OUT_DIR))
 
