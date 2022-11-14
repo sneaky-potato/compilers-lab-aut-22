@@ -11,3 +11,4 @@ test.s
 .vscode
 output.txt
 *.tab.*
+output/
