@@ -1,7 +1,7 @@
 # Makefile variables
 RM := rm -rf
 MAIN := ass6_20CS10010_20CS10011
-EXEC := ./a.out
+EXEC := ./tinyC
 IN_DIR := ./input
 OUT_DIR := ./output
 TESTFILES := $(wildcard $(IN_DIR)/*.c) # [./input/test1.c, ./input/test2.c, ...]
