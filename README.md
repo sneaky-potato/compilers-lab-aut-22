@@ -1,6 +1,8 @@
 # Compilers (CS39003) &middot;
 
+>Any good software engineer will tell you that a compiler and an interpreter are interchangeable
 >
+> -- Tim Berners-Lee
 
 Repository for the Compilers Laboratory course (CS39003) offered in Autumn semester 2022, Department of CSE, IIT Kharagpur.
 
@@ -13,6 +15,7 @@ Assignment solutions along with problem statement can be found here-
 - [assignment_3](/assignment_3/README.md)
 - [assignment_4](/assignment_4/README.md)
 - [assignment_5](/assignment_5/README.md)
+- [assignment_6](/assignment_6/README.md)
 
 ## Disclaimer
 
